@@ -23,20 +23,22 @@ public class Launcher
         }
 
     //accessor and modifier (get and set) methods
-    public int changeReloadTime(int statPoints)
+    public int changeReloadTime(double statPoints)
     {
            statPoints = statPoints*.1;
            reloadTime *= statPoints;
            return reloadTime;
      }
 
-     public int changeRange(int statPoints)
+     public int changeRange2(int statPoints) //Duplicate Method. Change to something else
      {
-           statPoints = 
+           //statPoints = 
+    	 return statPoints; //to prevent error
      }
 
     public int changeEffectRadius(int statPoints)
     {
+    	return statPoints; //to prevent error
     }
 
     public int changeDamage(int hurt)
