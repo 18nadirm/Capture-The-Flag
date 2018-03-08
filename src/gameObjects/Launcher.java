@@ -23,12 +23,21 @@ public class Launcher
         }
 
     //accessor and modifier (get and set) methods
-    public int changeCooldown(int cooldown)
-       {
-           cooldown *=.1;
-           reloadTime= reloadTime*cooldown;
+    public int changeReloadTime(int statPoints)
+    {
+           statPoints = statPoints*.1;
+           reloadTime *= statPoints;
            return reloadTime;
-       }
+     }
+
+     public int changeRange(int statPoints)
+     {
+           statPoints = 
+     }
+
+    public int changeEffectRadius(int statPoints)
+    {
+    }
 
     //Other methods
 
