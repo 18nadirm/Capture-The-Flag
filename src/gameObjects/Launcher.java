@@ -49,6 +49,12 @@ public class Launcher
           return range;
        }
 
+       public int getDamage()
+       {
+         return damage;
+       }
+
+       
     //Other methods
 
 }
