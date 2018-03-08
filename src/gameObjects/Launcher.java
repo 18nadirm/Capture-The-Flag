@@ -23,10 +23,13 @@ public class Launcher
         }
 
     //accessor and modifier (get and set) methods
-    public int changeReloadTime(double statPoints)
+    /*
+    This enables people to "upgrade" the reloadTime of the Launcher by subtracting awa
+    */
+    public int changeReloadTime(int statPoints)//stat points has to be an interger because you cannot put in half a point
     {
            statPoints = statPoints*.1;
-           reloadTime *= statPoints;
+           reloadTime = reloadTime- statPoints;
            return reloadTime;
      }
 
@@ -34,14 +37,18 @@ public class Launcher
     {
     	return statPoints; //to prevent error
     }
-
+    /*
+    This enables people to "upgrade" the range of the Launcher
+    */
     public int changeDamage(int hurt)
        {
           hurt *=.1;
           damage = damage*hurt;
           return damage;
        }
-
+/*
+This enables people to "upgrade" the range of the Launcher
+*/
     public int changeRange(int distance)
        {
           distance *=.1;
@@ -49,12 +56,9 @@ public class Launcher
           return range;
        }
 
-       public int getDamage()
-       {
-         return damage;
-       }
-
-       
+       public int getDamage() {return damage;} //returns damage that gets subtracted from health
+       public int getRange() {return range;} // returns amount of pixels that the projectile should travel
+       public int getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
     //Other methods
 
 }
