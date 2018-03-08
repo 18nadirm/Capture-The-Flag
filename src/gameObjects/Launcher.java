@@ -1,7 +1,7 @@
 package gameObjects;
 
 
-public class Launcher 
+public class Launcher
 {
     //instance variables
     int reloadTime;
@@ -9,14 +9,14 @@ public class Launcher
     int projectileSpeed;
     int effectRadius;
     int range;
-    		//testing edit
     
+
     //Constructor
-    
-    
+
+
     //accessor and modifier (get and set) methods
-    
-    
+
+
     //Other methods
-     
+
 }
