@@ -30,6 +30,15 @@ public class Launcher
            return reloadTime;
        }
 
+    public int changeDamage(int hurt)
+       {
+          hurt *=.1;
+          damage = damage*hurt;
+          return damage;
+       }
+
+    public int 
+
     //Other methods
 
 }
