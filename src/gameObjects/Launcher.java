@@ -12,7 +12,15 @@ public class Launcher
 
 
     //Constructor
+    public Launcher()
+        {
+            reloadTime = 3;
+            damage = 10;
+            projectileSpeed = 20;
+            effectRadius= 5;
+            range= 200;
 
+        }
 
     //accessor and modifier (get and set) methods
     public int changeCooldown(int cooldown)
