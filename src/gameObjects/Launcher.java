@@ -30,11 +30,6 @@ public class Launcher
            return reloadTime;
      }
 
-     public int changeRange(int statPoints)
-     {
-           statPoints = 
-     }
-
     public int changeEffectRadius(int statPoints)
     {
     }
