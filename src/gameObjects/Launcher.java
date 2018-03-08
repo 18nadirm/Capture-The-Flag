@@ -37,7 +37,12 @@ public class Launcher
           return damage;
        }
 
-    public int 
+    public int changeRange(int distance)
+       {
+          distance *=.1;
+          range = range*distance;
+          return range;
+       }
 
     //Other methods
 
