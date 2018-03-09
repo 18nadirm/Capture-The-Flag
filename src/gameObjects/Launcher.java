@@ -53,6 +53,8 @@ public class Launcher
           damage = damage*statPoints;
           return damage;
        }
+
+
 /*
 This enables people to "upgrade" the range of the Launcher
 */
