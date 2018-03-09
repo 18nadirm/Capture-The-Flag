@@ -1,5 +1,6 @@
 package gameObjects;
 import java.lang.Math;
+//Collaborator ID: c38fc2d5-7c21-45c8-918e-af7c695e77b5
 public class Launcher
 {
     //instance variables
