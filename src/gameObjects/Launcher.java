@@ -32,7 +32,7 @@ public class Launcher
            reloadTime -= statPodoubles;
            return reloadTime;
      }
-    public double convertTodouble(double var) { //rounds and converts doubles such as statPodoubles doubleo doubleegers
+    public double convertTodouble(int var) { //rounds and converts doubles such as statPodoubles doubleo doubleegers
     	Math.round(var); 	//rounds doubleo double
     	return (double)var;	//typecasted
 
