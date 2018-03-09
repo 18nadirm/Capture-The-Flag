@@ -14,11 +14,11 @@ public class Launcher
     //Constructor
     public Launcher()
         {
-            reloadTime = 3;
-            damage = 10;
-            projectileSpeed = 20;
-            effectRadius= 5;
-            range= 200;
+            reloadTime = 3.0;
+            damage = 10.0;
+            projectileSpeed = 20.0;
+            effectRadius= 5.0;
+            range= 200.0;
 
         }
 
