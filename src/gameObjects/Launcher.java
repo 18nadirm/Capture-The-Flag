@@ -40,20 +40,17 @@ public class Launcher
     }
     public int changeEffectRadius(int statPoints)
     {
-    	return statPoints; //to prevent error
+      statPoints *=.1;
+      effectRadius = effectRadius*statPoints;
+    	return effectRadius; //to prevent error
     }
     /*
     This enables people to "upgrade" the range of the Launcher
     */
     public int changeDamage(int statPoints)
        {
-<<<<<<< HEAD
           statPoints *=.1;
           damage = damage*statPoints;
-=======
-          hurt *=.1;
-          damage *=hurt;
->>>>>>> 32befb6d0407934ec84cfa7a22fb66bbaeb8bf07
           return damage;
        }
 /*
