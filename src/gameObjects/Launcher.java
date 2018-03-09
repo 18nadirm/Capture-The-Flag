@@ -1,10 +1,9 @@
 package gameObjects;
-
-
+import java.lang.Math;
 public class Launcher
 {
     //instance variables
-    int reloadTime;
+    double reloadTime;
     int damage;
     int projectileSpeed;
     int effectRadius;
@@ -26,13 +25,17 @@ public class Launcher
     /*
     This enables people to "upgrade" the reloadTime of the Launcher by subtracting awa
     */
-    public int changeReloadTime(int statPoints)//stat points has to be an interger because you cannot put in half a point
+    public double changeReloadTime(double statPoints)//stat points has to be an interger because you cannot put in half a point //statPoints needs to be a double because you can't multiply a double by an int and have it return an int. You can use Math.round and convert it back to an int in the end.
     {
-           statPoints = statPoints*.1;
-           reloadTime = reloadTime- statPoints;
+           statPoints *= .1;
+           reloadTime -= statPoints;
            return reloadTime;
      }
+    public int convertToInt(double var) { //rounds and converts doubles such as statPoints into integers
+    	Math.round(var); 	//rounds into int
+    	return (int)var;	//typecasted
 
+    }
     public int changeEffectRadius(int statPoints)
     {
     	return statPoints; //to prevent error
@@ -43,7 +46,7 @@ public class Launcher
     public int changeDamage(int hurt)
        {
           hurt *=.1;
-          damage = damage*hurt;
+          damage *=hurt;
           return damage;
        }
 /*
