@@ -1,25 +1,24 @@
 package gameObjects;
 import java.lang.Math;
 //Collaborator ID: c38fc2d5-7c21-45c8-918e-af7c695e77b5
-
 public class Launcher
 {
     //instance variables
     double reloadTime;
-    int damage;
-    int projectileSpeed;
-    int effectRadius;
-    int range;
+    double damage;
+    double projectileSpeed;
+    double effectRadius;
+    double range;
 
 
     //Constructor
     public Launcher()
         {
-            reloadTime = 3;
-            damage = 10;
-            projectileSpeed = 20;
-            effectRadius= 5;
-            range= 200;
+            reloadTime = 3.0;
+            damage = 10.0;
+            projectileSpeed = 20.0;
+            effectRadius= 5.0;
+            range= 200.0;
 
         }
 
@@ -27,30 +26,30 @@ public class Launcher
     /*
     This enables people to "upgrade" the reloadTime of the Launcher by subtracting awa
     */
-    public double changeReloadTime(double statPoints)//stat points has to be an interger because you cannot put in half a point //statPoints needs to be a double because you can't multiply a double by an int and have it return an int. You can use Math.round and convert it back to an int in the end.
+    public double changeReloadTime(double statPodoubles)//stat podoubles has to be an doubleerger because you cannot put in half a podouble //statPodoubles needs to be a double because you can't multiply a double by an double and have it return an double. You can use Math.round and convert it back to an double in the end.
     {
-           statPoints *= .1;
-           reloadTime -= statPoints;
+           statPodoubles *= .1;
+           reloadTime -= statPodoubles;
            return reloadTime;
      }
-    public int convertToInt(double var) { //rounds and converts doubles such as statPoints into integers
-    	Math.round(var); 	//rounds into int
-    	return (int)var;	//typecasted
+    public double convertTodouble(double var) { //rounds and converts doubles such as statPodoubles doubleo doubleegers
+    	Math.round(var); 	//rounds doubleo double
+    	return (double)var;	//typecasted
 
     }
-    public int changeEffectRadius(int statPoints)
+    public double changeEffectRadius(double statPodoubles)
     {
-      statPoints *=.1;
-      effectRadius = effectRadius*statPoints;
-    	return effectRadius; //to prevent error
+      statPodoubles *=.1;
+      effectRadius = effectRadius*statPodoubles;
+    	return effectRadius;
     }
     /*
     This enables people to "upgrade" the range of the Launcher
     */
-    public int changeDamage(int statPoints)
+    public double changeDamage(double statPodoubles)
        {
-          statPoints *=.1;
-          damage = damage*statPoints;
+          statPodoubles *=.1;
+          damage = damage*statPodoubles;
           return damage;
        }
 
@@ -58,16 +57,16 @@ public class Launcher
 /*
 This enables people to "upgrade" the range of the Launcher
 */
-    public int changeRange(int statPoints)
+    public double changeRange(double statPodoubles)
        {
-          statPoints *=.1;
-          range = range*statPoints;
+          statPodoubles *=.1;
+          range = range*statPodoubles;
           return range;
        }
 
-       public int getDamage() {return damage;} //returns damage that gets subtracted from health
-       public int getRange() {return range;} // returns amount of pixels that the projectile should travel
-       public int getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
+       public double getDamage() {return damage;} //returns damage that gets subtracted from health
+       public double getRange() {return range;} // returns amount of pixels that the projectile should travel
+       public double getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
     //Other methods
 
 }
