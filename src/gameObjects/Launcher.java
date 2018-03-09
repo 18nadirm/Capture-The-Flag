@@ -1,7 +1,7 @@
 package gameObjects;
 import java.lang.Math;
 //Collaborator ID: 3e12fb13-b425-4ff8-9cbf-f109595cbb68
-// Map: bb2adf41-4cc6-4688-b8cf-a285b2bbf725
+
 public class Launcher
 {
     //instance variables
