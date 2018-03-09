@@ -40,19 +40,19 @@ public class Launcher
     /*
     This enables people to "upgrade" the range of the Launcher
     */
-    public int changeDamage(int hurt)
+    public int changeDamage(int statPoints)
        {
-          hurt *=.1;
-          damage = damage*hurt;
+          statPoints *=.1;
+          damage = damage*statPoints;
           return damage;
        }
 /*
 This enables people to "upgrade" the range of the Launcher
 */
-    public int changeRange(int distance)
+    public int changeRange(int statPoints)
        {
-          distance *=.1;
-          range = range*distance;
+          statPoints *=.1;
+          range = range*statPoints;
           return range;
        }
 
