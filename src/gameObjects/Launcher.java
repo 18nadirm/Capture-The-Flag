@@ -1,6 +1,11 @@
 package gameObjects;
 import java.lang.Math;
+<<<<<<< HEAD
 //Collaborator ID: c38fc2d5-7c21-45c8-918e-af7c695e77b5
+=======
+//Collaborator ID: 3e12fb13-b425-4ff8-9cbf-f109595cbb68
+
+>>>>>>> bb9ea89d46cbb8e29ccd0b2e9d20c4bebeff8c48
 public class Launcher
 {
     //instance variables
@@ -75,5 +80,17 @@ This enables people to "upgrade" the range of the Launcher
        public double getRange() {return range;} // returns amount of pixels that the projectile should travel
        public double getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
     //Other methods
+    /*
+    still working on it the idea is to have a 5 base guns which you can customize and this is one of those
+    */
+    public void sniper()
+    {
+      damage = 50.0;
+      reloadTime = 10.0;
+      projectileSpeed = 2.0;
+      range = 500.0;
+      effectRadius = 5.0;
+
+    }
 
 }
