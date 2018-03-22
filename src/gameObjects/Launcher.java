@@ -1,7 +1,6 @@
 package gameObjects;
 import java.lang.Math;
-//Collaborator ID: 3e12fb13-b425-4ff8-9cbf-f109595cbb68
-// Map: bb2adf41-4cc6-4688-b8cf-a285b2bbf725
+//Collaborator ID: c38fc2d5-7c21-45c8-918e-af7c695e77b5
 public class Launcher
 {
     //instance variables
@@ -25,7 +24,7 @@ public class Launcher
 
     //accessor and modifier (get and set) methods
     /*
-    This enables people to "upgrade" the reloadTime of the Launcher by subtracting awa
+    This enables people to "upgrade" the reload time of the Launcher by subtracting awa
     */
     public double changeReloadTime(double statPodoubles)//stat podoubles has to be an doubleerger because you cannot put in half a podouble //statPodoubles needs to be a double because you can't multiply a double by an double and have it return an double. You can use Math.round and convert it back to an double in the end.
     {
@@ -33,19 +32,26 @@ public class Launcher
            reloadTime -= statPodoubles;
            return reloadTime;
      }
-    public double convertTodouble(int var) { //rounds and converts doubles such as statPodoubles doubleo doubleegers
+    public double convertTodouble(double var) { //rounds and converts doubles such as statPodoubles doubleo doubleegers
     	Math.round(var); 	//rounds doubleo double
     	return (double)var;	//typecasted
 
     }
+
+
+    /*
+    This enables people to "upgrade" the effect radius of the Launcher
+    */
     public double changeEffectRadius(double statPodoubles)
     {
       statPodoubles *=.1;
       effectRadius = effectRadius*statPodoubles;
     	return effectRadius;
     }
+
+
     /*
-    This enables people to "upgrade" the range of the Launcher
+    This enables people to "upgrade" the damage of the Launcher
     */
     public double changeDamage(double statPodoubles)
        {
