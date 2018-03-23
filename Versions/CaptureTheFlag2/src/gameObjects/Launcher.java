@@ -73,4 +73,18 @@ This enables people to "upgrade" the range of the Launcher
        public double getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
     //Other methods
 
+    /*
+    still working on it the idea is to have a 5 base guns which you can customize and this is one of those
+    */
+    public void sniper()
+    {
+      damage = 50.0;
+      reloadTime = 10.0;
+      projectileSpeed = 2.0;
+      range = 500.0;
+      effectRadius = 5.0;
+
+    }
+
+
 }
