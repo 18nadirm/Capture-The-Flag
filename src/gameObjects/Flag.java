@@ -38,10 +38,10 @@ public class Flag implements GameObject
     public void draw(Graphics g, int scaleDownFactor, int offsetX, int offsetY)
     {
          g.setColor(myColor);
-        int displayX = x*scaleDownFactor+offsetX;
-        int displayY = y*scaleDownFactor+offsetY;
-        int displayWidth = width*scaleDownFactor;
-        int displayHeight = height*scaleDownFactor;
+        int displayX = x/scaleDownFactor+offsetX;
+        int displayY = y/scaleDownFactor+offsetY;
+        int displayWidth = width/scaleDownFactor;
+        int displayHeight = height/scaleDownFactor;
         
         int gridDiv = 4;
         int checkWidth = displayWidth/gridDiv;

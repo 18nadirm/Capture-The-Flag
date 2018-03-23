@@ -33,7 +33,11 @@ public class PowerUp implements GameObject
     public int getStealth() { return 0; }
     public String pack()
     {
-        return "BARR";
+
+        
+        String s = "POWR" + "X" + x + "Y" + y + "W" + width + "H" + height;
+        return s;
+       
     }
     public void unpack(String s) 
     {
