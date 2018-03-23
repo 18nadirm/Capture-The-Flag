@@ -9,19 +9,19 @@ import java.lang.Math;
 public class Launcher
 {
     //instance variables
-    double reloadTime;
-    double damage;
-    double projectileSpeed;
-    double effectRadius;
-    double range;
+    double reloadTime; //time between fireing clips
+    double damage; //damage done from a direct hit to an enemy
+    double projectileSpeed; //the rate a projectile will fire pixels/frame
+    double effectRadius; //The radius of damage caused by a succsesful hit
+    double range; //The time a projectile remains active
 
 
     //Constructor
     public Launcher()
         {
-            reloadTime = 3.0;
-            damage = 10.0;
-            projectileSpeed = 20.0;
+            reloadTime = 3.0; //3 seconds
+            damage = 10.0; //10 health
+            projectileSpeed = 20.0; //
             effectRadius= 5.0;
             range= 200.0;
 
