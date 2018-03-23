@@ -11,6 +11,7 @@ package client;
 
 
 import gameObjects.Map;
+import gameObjects.Player;
 import gameObjects.PowerUp;
 import gameObjects.Projectile;
 import java.awt.Graphics;
@@ -35,10 +36,10 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
 
     //Instance Variables
     //-------------------------------------------------------
-    private Character myself;
+    private Player myself;
     private Map map;
     private ArrayList<Projectile> projectiles; 
-    private ArrayList<Character> otherChars;
+    private ArrayList<Player> otherChars;
     private ArrayList<PowerUp> powerups;
     
     //Network variables
@@ -47,15 +48,17 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     private final int DELAY = 100; //delay in mSec
     private GenericComm comm;
     String response = "No response.";
-
+    
     //Constructor
     //-------------------------------------------------------
     public ArcadeDemo()
     {   //Enter the name and width and height.  
-        super("CaptureTheFlag", 1200, 700);
-        
+        super("CaptureTheFlag", 1200, 740);
+        map = new Map();
         comm = new GenericComm();
-        comm.setDebugValues("C_COMM",0);  
+        comm.setDebugValues("C_COMM",0); 
+        //This is how a new instance gets it's id...
+        myself = new Player(comm.getSocket().getLocalPort());
         initTimer();
     }
        
@@ -65,20 +68,19 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     {
         //Choose mode - if WAITING mode draw "Store" else
         
+        
+        map.updateGameObjects();
         //Draw main display
-        
+        map.drawMainDisplay(g, myself, 5, 20);
         //Draw Radar display
-        
+        map.drawRadarDisplay(g, myself, 740, 20);
         //Draw character status display
-        
-        //Draw a circle that follows the mouse.
-        g.setColor(Color.BLACK);
-        g.fillOval(mouseX-10, mouseY-10, 20,20);
         
         //General Text (Draw this last to make sure it's on top.)
         g.setColor(Color.BLACK);
         g.drawString("ArcadeEngine 2008", 10, 12);
         g.drawString("frame="+frameNumber,200,12);
+        g.drawString("You are" + comm.getSocket().getLocalPort(), 10, 30);
         g.drawString(response,300,12);
         
         return g;
@@ -97,8 +99,9 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     public void keyTyped(KeyEvent e) 
     {
         char c = e.getKeyChar();
-        //When the player moves, send a message to the server!  
-            
+          
+        if(c == 't')
+            myself.rotateRight();
     }
     
     public void keyPressed(KeyEvent e)
@@ -151,10 +154,10 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     
     public void initMusic() 
     {
-        themeMusic = loadClip("under.wav");
-        bellSound = loadClip("ding.wav");
-                if(themeMusic != null)
-                    themeMusic.loop(); //This would make it play!
+//        themeMusic = loadClip("under.wav");
+//        bellSound = loadClip("ding.wav");
+//                if(themeMusic != null)
+//                    themeMusic.loop(); //This would make it play!
     }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -189,17 +192,30 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     public void actionPerformed(ActionEvent e) 
     {   //--GET UPDATE FROM SERVER--
         //Called whenever timer goes off (every DELAY msec.) 
-        comm.sendMessage("UPDATE");
-        response = comm.getMostRecentMessage();
-        if(response == null) response = "No response.";
-        System.out.println("I recieved: "+response);
-        //Unpack the info
-            //Update the list of characters
-            //Update the list of projectiles
-            
+        String message = myself.pack();
+        comm.sendMessage(message);
         
-    }    
+        response = comm.getMostRecentMessage();
+        if(response == null)
+        { response = "No response."; }
+        else if(response.startsWith("MAP"))
+        {
+            //When unpacking a map, it returns the player unpacking it.  
+            String packedPlayer = map.unpack(response, myself.getID());
+            myself = new Player(packedPlayer);
+        }
+        else
+        {
+            response = "UNRECOGNIZED: "+response;
+            debugMsg(response);
+        }
+    }   //end of actionPerformed()
 
+    private void debugMsg(String m)
+    {
+        if(GenericComm.debugMode)
+            System.out.println(m);
+    }
 
 }//--end of ArcadeDemo class--
 

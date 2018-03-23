@@ -14,17 +14,21 @@ public class SS_Main //The Server-side main (MULTI_SERVER!)
         SS_Main main = new SS_Main();
     }
     
-    int FPS = 10;   //Frames per second (animation speed)
+    int FPS = 30;   //Frames per second (animation speed)
     SS_GameEngine theEngine;
     JFrame myFrame;
+//    ArrayList<SS_Thread> threads = new ArrayList<SS_Thread>();
 
     public SS_Main() throws IOException
     {
-        initEngine();
+        System.out.println("Beginning of SS_Main");
+        initGameEngine();
+        System.out.println("SS_GameEngine initialized");
         acceptClients();
+        System.out.println("End of SS_Main");
     }
     
-    public void initEngine()
+    public void initGameEngine()
     {
         theEngine = new SS_GameEngine();
         myFrame = new JFrame();
@@ -51,13 +55,15 @@ public class SS_Main //The Server-side main (MULTI_SERVER!)
             System.err.println("Could not listen on port: 4444. or 4445.?");
             System.exit(-1);
         }
-
+//        System.out.println("Channel: " + sendSocket.getChannel());
+//        System.out.println("toString: " + sendSocket.toString() );
         //Create a new thread whenever someone tries to connect...
         //-----------------------------------------
         while (listening)
         {
-            System.out.println("Listening for new clients.");
-            new SS_Thread(sendSocket.accept(), theEngine).start();
+          System.out.println("Listening for new clients.");
+          new SS_Thread(sendSocket.accept(), theEngine).start();
+         
         }
 
         //Clean things up by closing socket.

@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 public class CaptureTheFlag 
 {
 
-    int FPS = 60;   //Frames per second (animation speed)
+    int FPS = 30;   //Frames per second (animation speed)
     AnimationPanel world = new ArcadeDemo();
     
     

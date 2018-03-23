@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 public class GenericComm
 {   //Declare variables
+    private final String defaultIP = "10.131.55.118";
     //--Two things to keep track of who's talking--
     private int myNumber = 0;
     private String myTitle = "???";
@@ -23,7 +24,7 @@ public class GenericComm
     private PrintWriter out = null;
     private BufferedReader in = null;
     private Socket socket = null;
-    private boolean debug = false;
+    public static boolean debugMode = true;
     
     //--------------------------------------------------------
     //Constructors
@@ -31,6 +32,9 @@ public class GenericComm
     {   //Establish connection via socket.
         socket = in_socket;
         createStreams(socket);
+    }
+    public Socket getSocket(){
+        return socket;
     }
     public GenericComm() 
     {   //Don't know the socket details yet... need to connect.
@@ -44,7 +48,7 @@ public class GenericComm
     public void sendMessage(String message)
     {
         out.println(message); //Send a message 
-        debugMsg("<S<",message);
+//        debugMsg("<S<",message);
     }
     //--------------------------------------------------------
     public String getMessage()
@@ -131,7 +135,7 @@ public class GenericComm
     {
         Socket theSocket = null;
         String serverName = JOptionPane.showInputDialog
-                         ("Please enter the Server IP address", "10.131.91.3");
+                         ("Please enter the Server IP address", defaultIP);
         try 
         {
             theSocket = new Socket(serverName, 4444);
@@ -160,7 +164,7 @@ public class GenericComm
     
     public void debugMsg(String type, String text)
     {   //Displays a debug message in the output window.  
-        if(debug)
+        if(debugMode)
             System.out.println(type+myTitle+"("+myNumber+"):  "+text);
     }
     //===========================================================

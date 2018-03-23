@@ -1,5 +1,6 @@
 package server;
 
+import gameObjects.Player;
 import util.GenericComm;
 import java.net.*;
 import java.util.ArrayList;
@@ -14,20 +15,19 @@ public class SS_Thread extends Thread
 {
     //--static class variables--
     private static int numConnections = 0;  //Counts the total number of connections
-//    private static ArrayList<String> messages = new ArrayList<String>();
     private SS_GameEngine gameEngine;
     //--private instance variables--
     private int myNumber = 0; //Which connection number am I?
     private GenericComm comm = null; //Generic communication object
-
+    Socket mine;
     public SS_Thread(Socket socket, SS_GameEngine theEngine) //Constructor
-    {
+    {        
         super("SS_Thread");
+        mine = socket;
         gameEngine = theEngine;
         //***There is a new connection, and I'm it!
         numConnections++;
         myNumber = numConnections;
-//        messages.add("New member added to chat: (#"+myNumber+")"); //adds an element to the static messages array
         //***Initialize the GenericComm object.  
         comm = new GenericComm(socket);
         comm.setDebugValues("SS_Thread", myNumber);
@@ -37,28 +37,31 @@ public class SS_Thread extends Thread
     //---------------------------------------------------------------
     public void run() 
     {
-        String inputLine, outputLine;
-        int myStart = 0;
-        comm.sendMessage("SS: Hello, you are connection #"+myNumber); //Send a welcome. 
+        String inputLine;
+        Player myself = new Player(mine.getPort());
+        gameEngine.addNewPlayer(myself);
+        comm.sendMessage("WELCOME" + mine.getPort() ); //Send a welcome. 
+        System.out.println("SS: Welcome" + mine.getPort() );
         //This loop constantly waits for input from Client and responds...
         //----------------------------------------------------------------
-        while ((inputLine = comm.getMessage()) != null) 
-        {
+        while ((inputLine = comm.getMessage()) != null){ 
+                
             if(inputLine.equals("UPDATE"))
             {
-                ArrayList<String> gameData = gameEngine.getStatusUpdate(numConnections);
-                for(String s : gameData)
-                    comm.sendMessage(s);
-                //comm.sendMessage("DONE");  
+                String gameData = gameEngine.getStatusUpdate(myNumber);
+                comm.sendMessage(gameData);
             }
             else
             {
-                gameEngine.processInput(inputLine, myNumber);                                       
+                gameEngine.processInput(inputLine, mine.getPort());
+                //Send the game data back anyway!!! 
+                String gameData = gameEngine.getStatusUpdate(myNumber);
+                comm.sendMessage(gameData);
             }
 
         }
         System.out.println("END OF WHILE!!! - SS_Thread");
-
+        gameEngine.processInput("terminated", mine.getPort());
         //Clean things up by closing streams and sockets.
         //-----------------------------------------------
         comm.closeNicely();
