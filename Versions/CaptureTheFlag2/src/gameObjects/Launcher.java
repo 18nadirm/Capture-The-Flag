@@ -10,16 +10,19 @@ public class Launcher
     double projectileSpeed;
     double effectRadius;
     double range;
+    double firingRate;
+    double clipSize;
 
 
     //Constructor
     public Launcher()
         {
-            reloadTime = 3.0;
+            reloadTime = 3.0; //in seconds
             damage = 10.0;
             projectileSpeed = 20.0;
             effectRadius= 5.0;
             range= 200.0;
+            firingRate=
 
         }
 
