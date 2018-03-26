@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player implements GameObject {
+public class PlayerServer implements GameObject {
 
     //instance variables ------------------------------------
     int x, y;
@@ -46,7 +46,7 @@ public class Player implements GameObject {
     int localPort;
 
     //constructor(s) ----------------------------------------
-    Player(int spd, int hp, int mp, Color team) {
+    PlayerServer(int spd, int hp, int mp, Color team) {
         velocity = spd / fps;
         health = hp;
         cStamina = mp;
@@ -56,7 +56,7 @@ public class Player implements GameObject {
     }
 
     //constructor(s) ----------------------------------------
-    public Player(int drewsNum) {
+    public PlayerServer(int drewsNum) {
         id = drewsNum;
         x = randy.nextInt(500) + 100;//Use this to initialize variables.  
         y = randy.nextInt(500) + 100;
@@ -67,7 +67,7 @@ public class Player implements GameObject {
         }
     }
 
-    public Player() {
+    public PlayerServer() {
         x = randy.nextInt(1000) + 100;//Use this to initialize variables.  
         y = randy.nextInt(500) + 100;
         teamColor = new Color(randy.nextInt(255), randy.nextInt(255), randy.nextInt(255));
