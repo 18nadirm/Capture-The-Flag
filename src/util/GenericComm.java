@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
 
 public class GenericComm
 {   //Declare variables
-    private final String defaultIP = "10.131.55.118";
+    private final String defaultIP = "192.168.1.254";
+//    private final String defaultIP = "10.131.55.118";
     //--Two things to keep track of who's talking--
     private int myNumber = 0;
     private String myTitle = "???";

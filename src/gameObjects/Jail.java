@@ -1,16 +1,22 @@
 package gameObjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Jail implements GameObject
 {
+    int width=80;
+    int height=80;
+
     //instance variables ------------------------------------
     int x, y;
-    int width, height;
     
     //constructor(s) ----------------------------------------
-    
+    public Jail(int xx, int yy)
+    {
+        x=xx; y=yy;
+    }
     //accessors and modifiers (get and set methods) ---------
     
     //implemented methods -----------------------------------
@@ -28,7 +34,8 @@ public class Jail implements GameObject
      */
     public void draw(Graphics g, int scaleDownFactor, int offsetX, int offsetY)
     {
-        
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y, width, height);
     }
     public int getStealth() { return 0; }
     public String pack()

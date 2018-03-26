@@ -3,18 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/server/SS_GameEngine.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/Jail.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/GameObject.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/server/SS_Thread.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/Player.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/util/GenericComm.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/PowerUp.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/Projectile.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/server/SS_Main.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/Flag.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/client/ArcadeDemo.java</file>
-            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag/src/gameObjects/Barrier.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/PowerUp.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/Launcher.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/Projectile.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/Player.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/Store.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/server/SS_GameEngine.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/Map.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/client/ArcadeDemo.java</file>
+            <file>file:/C:/Users/spockm/Documents/NetBeansProjects/CaptureTheFlag3/src/gameObjects/Jail.java</file>
         </group>
     </open-files>
 </project-private>

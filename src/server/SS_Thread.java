@@ -38,8 +38,8 @@ public class SS_Thread extends Thread
     public void run() 
     {
         String inputLine;
-        Player myself = new Player(mine.getPort());
-        gameEngine.addNewPlayer(myself);
+//        Player myself = new Player(mine.getPort());
+        gameEngine.addNewPlayer(mine.getPort());
         comm.sendMessage("WELCOME" + mine.getPort() ); //Send a welcome. 
         System.out.println("SS: Welcome" + mine.getPort() );
         //This loop constantly waits for input from Client and responds...

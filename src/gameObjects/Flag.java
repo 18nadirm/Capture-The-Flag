@@ -10,6 +10,9 @@ public class Flag implements GameObject
     int x, y;
     int width, height;
     Color myColor;
+    boolean noColor;
+    boolean redPossession;
+    boolean bluePossession;
     
     
     //constructor(s) ----------------------------------------
@@ -30,6 +33,7 @@ public class Flag implements GameObject
     /**
      * Draw the GameObject onto the Graphics page
      * with the appropriate offset and scale factor.  
+     * The flag looks like a checkerboard. 
      * @param g - the Graphics object to be drawn onto.
      * @param scaleDownFactor - the amount to divide your x,y by before drawing.
      * @param offsetX - the amount to add to your x coordinate before drawing. 
@@ -37,7 +41,6 @@ public class Flag implements GameObject
      */
     public void draw(Graphics g, int scaleDownFactor, int offsetX, int offsetY)
     {
-         g.setColor(myColor);
         int displayX = x/scaleDownFactor+offsetX;
         int displayY = y/scaleDownFactor+offsetY;
         int displayWidth = width/scaleDownFactor;

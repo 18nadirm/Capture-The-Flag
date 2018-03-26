@@ -1,5 +1,17 @@
 package gameObjects;
+//TODO: check/improve the implementation of speed/velocity/fps
+//TODO: make an animate method (to be used in Map class)
+//TODO: if inJail, you can't move out.
+//TODO: you can't move off the Map
+//TODO: implement reactToHit(Projectile p)
+//TODO: implement reactToTag()
+//TODO: pack/unpack are missing elements including Launcher and PowerUps
+//TODO: look through Powerups to improve performance
+//TODO: change getStealth to return boolean and use in Map class
+//TODO: Player Status Display! 
 
+
+import client.CaptureTheFlag;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -9,61 +21,56 @@ import util.GenericComm;
 
 public class Player implements GameObject
 {
-    //instance variables ------------------------------------
-    // REALLY NEED TO SIMPLIFY THIS!!!! ---------------------
-    int x, y; 
     final int width = 25;
-    int direction; //in degrees
-    
-    Color teamColor;
-    
-    String name;
-    
-    int energyLevel; //max at maxStamina
-    int health;
-    
+    int fps = CaptureTheFlag.FPS;
+    Random randy = new Random();
+
+    //instance variables ------------------------------------
+    int id;         //The id number assigned by the server (important!)
+    int x, y;       //Location of this Player
+    Color teamColor;    
+    String name;    
+
+    int direction;  //in degrees  
     boolean inJail;
     boolean hasFlag;
-    
-    //this is the speed stat, which can vary depending on powerups, or how the player allocates their stat points at the beginning of the game
-    int velocity; // (pixels/sec) / frame/second = pixels/frame
-    int maxSpeed = 200; // at speed pix/sec
-    
-    boolean hasStealth;
-    int maxStamina = 150;
-    int maxHealth = 150;
-    int maxSightRange = 350; //map display is max 700p x 700p
-    int shieldStrength;
-    
-    int fps;
-    
-    int cStealth;
-    int cStamina;
-    int cSightRange;
-    
     Launcher launcher; 
     ArrayList<PowerUp> powerUps;
     
-    int id;
+    int remainingSkillTokens; //For store
+    /*
+    The stats below can vary depending on PowerUps and can be changed at the Store between games
+    */
+    
+    int maxStamina;
+    int energyLevel; //max at maxStamina
 
-    Random randy = new Random();
+    int maxHealth;
+    int health;     //when your health hits zero - go to Jail!
+    
+    int maxSpeed; // at speed pix/sec   
+    int velocity; // (pixels/sec) / frame/second = pixels/frame
+
+    boolean hasStealth;
+
+    int sightRange;
+
+    int shieldStrength;
     
     //constructor(s) ----------------------------------------
-    Player (int spd, int hp, int mp, Color team)
+    public Player (int idNum, int xx, int yy, Color team, String n)
     {
-        init();
-        velocity = spd / fps;
-        health = hp;
-        cStamina = mp;
+        id = idNum;
+        x=xx; y=yy; 
         teamColor = team;
-        cStealth = 0;
-        cSightRange = 280;
+        name = n;
+        init();
     }
-    public Player(int drewsNum)
-    {
-        id = drewsNum;
-        init();    
-    }
+//    public Player(int drewsNum)
+//    {
+//        id = drewsNum;
+//        init();    
+//    }
     /**
      * The constructor to make a new Player based on packed data.
      * @param packed 
@@ -73,48 +80,34 @@ public class Player implements GameObject
         //error check this!!!!!
         unpack(packed);
     }
-    public Player()
-    {
-        x = randy.nextInt(1000) + 100;//Use this to initialize variables.  
-        y = randy.nextInt(500) + 100;
-        teamColor = new Color(randy.nextInt(255),randy.nextInt(255),randy.nextInt(255));
-    }
+//    public Player()
+//    {
+//        x = randy.nextInt(1000) + 100;//Use this to initialize variables.  
+//        y = randy.nextInt(500) + 100;
+//        teamColor = new Color(randy.nextInt(255),randy.nextInt(255),randy.nextInt(255));
+//    }
     
     private void init()
     {
-        x = randy.nextInt(500) + 100;//Use this to initialize variables.  
-        y = randy.nextInt(500) + 100;
-        if(randy.nextBoolean())
-            teamColor = Color.BLUE;
-        else
-            teamColor = Color.RED;
-        direction = 0; //in degrees
-    
-        name = "nobody";
-    
-        energyLevel = 100; //max at maxStamina
-        health = 99;
-    
+        //This initializes the variables for a generic starting player. 
+        //x,y, name, id, and teamColor should be set in the constructor.  
+        direction = 0; //in degrees    
         inJail = false;
         hasFlag = false;
-    
-    //this is the speed stat, which can vary depending on powerups, or how the player allocates their stat points at the beginning of the game
-        velocity = 5; // (pixels/sec) / frame/second = pixels/frame
-        maxSpeed = 200; // at speed pix/sec
-    
-        hasStealth = false;
-        maxStamina = 150;
-        maxHealth = 150;
-        maxSightRange = 350; //map display is max 700p x 700p
-        shieldStrength = 22;
-        fps = 60;
-        cStealth = 1;
-        cStamina = 2;
-        cSightRange = 3;
-    
         launcher = new Launcher(); 
         powerUps = new ArrayList<PowerUp>();
+    
+        maxStamina = 150;
+        energyLevel = maxStamina; 
+        maxHealth = 150;
+        health = maxHealth;
+        maxSpeed = 200; // (pixels/sec) / frame/second = pixels/frame
+        velocity = 0; //Start not moving!!!
+        hasStealth = false;
+        sightRange = 350; //map display is max 700p x 700p
+        shieldStrength = 22;
         
+        remainingSkillTokens = 40;
     }
     
     //accessors and modifiers (get and set methods) ---------
@@ -123,7 +116,6 @@ public class Player implements GameObject
     
     public int getID() {return id;}
     
-    public void rotateRight() { direction += 5; } //TODO: FIX THIS!@
     public double getDirectionRadians() { return direction*Math.PI/180; }
     public int getDirection() { return direction; }
     
@@ -143,6 +135,8 @@ public class Player implements GameObject
     
     public void setFPS (int f) {fps = f;} //sets the frames per second in case it changes
 
+    
+    
     //implemented methods -----------------------------------
     public Rectangle getBounds() 
     {
@@ -170,12 +164,7 @@ public class Player implements GameObject
         int endY = centerY+(int)(size*Math.sin(this.getDirectionRadians()));
         g.drawLine(centerX, centerY, endX, endY);
     }
-//    public void draw(Graphics g)
-//    {
-//        g.setColor(teamColor);
-//        g.fillRect(x,y,width,width);
-//        
-//    }
+
     public int getStealth()
     {
         return 0;
@@ -191,20 +180,15 @@ public class Player implements GameObject
      */
     public String pack() 
     {
-        int J = 0, F = 0, C = 0; //J, F and C are integers representing the boolean values of inJail, hasFlag and teamColor
-        if (inJail) {
-            J = 1;
-        }
-        if (hasFlag) {
-            F = 1;
-        }
-        if (teamColor == Color.BLUE) {
-            C = 1;
-        }
-
+        int J = 0, F = 0, C = 0, S=0; //J, F and C are integers representing the boolean values of inJail, hasFlag and teamColor
+        if (inJail) { J = 1; }
+        if (hasFlag) {F = 1; }
+        if (teamColor == Color.BLUE) { C = 1; }
+        if (this.hasStealth) { S=1; }
+        
         String s = "PLA" + "=" + id + "=" + x + "=" + y + 
                 "=" + velocity + "=" + C + "=" + name + "=" + health + 
-                "=" + J + "=" + F + "=" + cStamina + "=" + cStealth + 
+                "=" + J + "=" + F + "=" + energyLevel + "=" + S + 
                 "=" + direction;
         return s;
 
@@ -212,7 +196,7 @@ public class Player implements GameObject
 
     public void unpack(String s) 
     {
-        int J, F, C;
+        int J, F, C, S;
         debugMsg("Player unpacking: "+s);
         String[] parts = s.split("=");
 
@@ -225,23 +209,14 @@ public class Player implements GameObject
         health = Integer.parseInt(parts[7]);
         J = Integer.parseInt(parts[8]);
         F = Integer.parseInt(parts[9]);
-        cStamina = Integer.parseInt(parts[10]);
-        cStealth = Integer.parseInt(parts[11]);
+        energyLevel = Integer.parseInt(parts[10]);
+        S = Integer.parseInt(parts[11]);
         direction = Integer.parseInt(parts[12]);
 
-        if (J == 0) {
-            inJail = false;
-        }
-        if (J == 1) {
-            inJail = true;
-        }
-        if (F == 0) {
-            hasFlag = false;
-        }
-        if (F == 1) {
-            hasFlag = true;
-        }
-        if (C ==0) 
+        inJail = J>0;
+        hasFlag = F>0;
+        hasStealth = S>0;
+        if (C == 0) 
             setColor(Color.RED);
         else
             setColor(Color.BLUE);
@@ -260,13 +235,17 @@ public class Player implements GameObject
     {
         
     }
+    //Because the y-axis is reversed compared to the 'unti circle'
+    //The rotate right and left may also seem opposite of expected.  
+    public void rotateRight() { direction += 5; } //TODO: FIX THIS!@
+    public void rotateLeft() { direction -= 5; } //TODO: FIX THIS!@
     public void moveForward()
     {
-        x += velocity;
+        velocity = 8;//this.maxSpeed/fps;  FIX THIS!!!!!
     }
     public void moveBackward()
     {
-        
+        velocity = 0;
     }
     public void sprintForward()
     {
@@ -280,6 +259,18 @@ public class Player implements GameObject
     {
         
     }
+    public Projectile fireWeapon()
+    {
+        //TODO: this needs to be improved to incorporate Launcher
+        //Also need to incorporate the direction of the launch.
+        return new Projectile(x,y,-1,-1,20,20);
+    }
+//    public void animate()
+//    {
+//        x += (int)(getVelocity()*Math.cos(getDirectionRadians())); 
+//        y += (int)(getVelocity()*Math.sin(getDirectionRadians())); 
+//        velocity-=SLOW_DOWN_AMOUNT;
+//    }
     
     
     private void debugMsg(String m)

@@ -1,7 +1,7 @@
 package client;
 
 
-/**
+/** 
  * Class ArcadeRunner
  * Runs and animates subclasses of MotionPanel
  * 
@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 public class CaptureTheFlag 
 {
 
-    int FPS = 30;   //Frames per second (animation speed)
+    public static int FPS = 30;   //Frames per second (animation speed)
     AnimationPanel world = new ArcadeDemo();
     
     

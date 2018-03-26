@@ -11,9 +11,8 @@ package client;
 
 
 import gameObjects.Map;
-import gameObjects.Player;
-import gameObjects.PowerUp;
 import gameObjects.Projectile;
+import gameObjects.Store;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
@@ -21,8 +20,8 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
 import java.applet.AudioClip;   
-import java.util.ArrayList;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import util.AnimationPanel;
 import util.GenericComm;
@@ -36,11 +35,16 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
 
     //Instance Variables
     //-------------------------------------------------------
-    private Player myself;
+    private int myID;
     private Map map;
-    private ArrayList<Projectile> projectiles; 
-    private ArrayList<Player> otherChars;
-    private ArrayList<PowerUp> powerups;
+    private String mode = "game"; //This mode can be "game" or "store" to determine which screen is displayed
+    
+    //Motion/keyboard variables
+    //-------------------------------------------------------
+    boolean leftPressed = false;
+    boolean rightPressed = false;
+    boolean upPressed = false;
+    boolean downPressed = false;
     
     //Network variables
     //-------------------------------------------------------
@@ -58,7 +62,7 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
         comm = new GenericComm();
         comm.setDebugValues("C_COMM",0); 
         //This is how a new instance gets it's id...
-        myself = new Player(comm.getSocket().getLocalPort());
+        myID = comm.getSocket().getLocalPort();
         initTimer();
     }
        
@@ -66,16 +70,20 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     //-------------------------------------------------------
     protected Graphics renderFrame(Graphics g) 
     {
-        //Choose mode - if WAITING mode draw "Store" else
-        
-        
-        map.updateGameObjects();
-        //Draw main display
-        map.drawMainDisplay(g, myself, 5, 20);
-        //Draw Radar display
-        map.drawRadarDisplay(g, myself, 740, 20);
-        //Draw character status display
-        
+        if(mode.equals("store")) {
+            Store.drawStore(g, map.getPlayerByID(myID), 0, 70);
+        }
+        else {
+            
+            processMotionRequests();
+            map.updateGameObjects();
+            //Draw main display
+            map.drawMainDisplay(g, myID, 5, 20);
+            //Draw Radar display
+            map.drawRadarDisplay(g, myID, 740, 20);
+            //Draw character status display
+        }
+            
         //General Text (Draw this last to make sure it's on top.)
         g.setColor(Color.BLACK);
         g.drawString("ArcadeEngine 2008", 10, 12);
@@ -85,6 +93,7 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
         
         return g;
     }//--end of renderFrame method--
+    
     
     //-------------------------------------------------------
     //Respond to Mouse Events
@@ -98,25 +107,54 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     //-------------------------------------------------------
     public void keyTyped(KeyEvent e) 
     {
-        char c = e.getKeyChar();
-          
-        if(c == 't')
-            myself.rotateRight();
+        char c = e.getKeyChar(); 
+        if(c == ' ')
+        {
+            Projectile proj = map.getPlayerByID(myID).fireWeapon();
+            map.lasers.add(proj);
+            comm.sendMessage(proj.pack());
+        }
     }
     
     public void keyPressed(KeyEvent e)
     {
         int v = e.getKeyCode();
+        if((v == KeyEvent.VK_A)||(v == KeyEvent.VK_LEFT))
+            leftPressed = true;
+        if((v == KeyEvent.VK_D)||(v == KeyEvent.VK_RIGHT))
+            rightPressed = true;    
+        if((v == KeyEvent.VK_W)||(v == KeyEvent.VK_UP))
+            upPressed = true;
+        if((v == KeyEvent.VK_D)||(v == KeyEvent.VK_DOWN))
+            downPressed = true;    
         
     }
 
     public void keyReleased(KeyEvent e)
     {
         int v = e.getKeyCode();
+        if((v == KeyEvent.VK_A)||(v == KeyEvent.VK_LEFT))
+            leftPressed = false;
+        if((v == KeyEvent.VK_D)||(v == KeyEvent.VK_RIGHT))
+            rightPressed = false;    
+        if((v == KeyEvent.VK_W)||(v == KeyEvent.VK_UP))
+            upPressed = false;
+        if((v == KeyEvent.VK_D)||(v == KeyEvent.VK_DOWN))
+            downPressed = false;    
         
     }
     
-    
+    public void processMotionRequests()
+    {
+        if(leftPressed)
+            map.getPlayerByID(myID).rotateLeft();
+        if(rightPressed)
+            map.getPlayerByID(myID).rotateRight();
+        if(upPressed)
+            map.getPlayerByID(myID).moveForward();
+        if(downPressed)
+            map.getPlayerByID(myID).moveBackward();
+    }
     //-------------------------------------------------------
     //Initialize Graphics
     //-------------------------------------------------------
@@ -192,7 +230,7 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
     public void actionPerformed(ActionEvent e) 
     {   //--GET UPDATE FROM SERVER--
         //Called whenever timer goes off (every DELAY msec.) 
-        String message = myself.pack();
+        String message = map.getPlayerByID(myID).pack();
         comm.sendMessage(message);
         
         response = comm.getMostRecentMessage();
@@ -201,8 +239,7 @@ public class ArcadeDemo extends AnimationPanel implements ActionListener
         else if(response.startsWith("MAP"))
         {
             //When unpacking a map, it returns the player unpacking it.  
-            String packedPlayer = map.unpack(response, myself.getID());
-            myself = new Player(packedPlayer);
+            map.unpack(response, myID);
         }
         else
         {

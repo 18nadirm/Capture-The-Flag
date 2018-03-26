@@ -1,11 +1,19 @@
 package server;
+//TODO: Improve Assign fair teams and starting locations
+//TODO: processInput for PowerUps
+//TODO: Fix glitchyness
+//TODO: interactions between objects
+//TODO: determine if the game is won
+//TODO: release people from jail after a certain amount of time
 
 import gameObjects.Map;
 import gameObjects.Player;
+import gameObjects.Projectile;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import util.AnimationPanel; 
 import util.GenericComm;
 
@@ -27,9 +35,22 @@ public class SS_GameEngine extends AnimationPanel {
      * to add the player to the game.  
      * @param p 
      */
-    public void addNewPlayer(Player p)
-    {        
-        map.playersMap.put(p.getID(), p);
+    public void addNewPlayer(int id)
+    {       
+        //Choose a team for this Player
+        Color teamColor = Color.RED;
+        if(map.playersMap.size()%2==0)
+            teamColor = Color.BLUE;
+        //Choose a location for this Player
+        int y = randy.nextInt(1000)+500; //The middle half vertically.
+        int x = randy.nextInt(500)+100; //Towards the back of the zone. 
+        if(teamColor == Color.BLUE)
+            x = 3000-x; //flip sides for the blue team
+        //ASK THE PLAYER FOR THEIR NAME 
+        String name = JOptionPane.showInputDialog
+                         ("Please enter your player name", "Anonymous");
+        Player p = new Player(id,x,y,teamColor,name);
+        map.playersMap.put(id, p);
     }
 
     /**
@@ -55,7 +76,10 @@ public class SS_GameEngine extends AnimationPanel {
         }
         else if(theInput.startsWith("PRO"))
         {
+        debugMsg("@ processInput, theInput:" + theInput + " connNum: " + myConnNumber);
             //Do something similar for Projectiles
+            Projectile p = new Projectile(theInput);
+            map.lasers.add(p);
         }
         else if(theInput.equalsIgnoreCase("terminated"))
         {   //A player has left the game...
@@ -94,11 +118,7 @@ public class SS_GameEngine extends AnimationPanel {
         
         //map.checkForInteractions(); - not written yet!
         
-//        //Draw a circle that follows the mouse. (Temporary!)
-//        g.setColor(Color.BLACK);
-//        g.fillOval(mouseX - 10, mouseY - 10, 20, 20);
-
-        map.drawFullDisplay(g, 50, 50);
+        map.drawServerFullDisplay(g, 50, 50);
         
         //General Text (Draw this last to make sure it's on top.)
         g.setColor(Color.BLACK);

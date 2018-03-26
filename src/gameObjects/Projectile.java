@@ -1,4 +1,7 @@
 package gameObjects;
+//TODO: Remove the 'frozen' property from this class
+//TODO: The constructor needs to set the damage value!
+//TODO: Improve the animate method, call it from the Map class
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -14,12 +17,20 @@ public class Projectile implements GameObject {
     boolean frozen;
            
     //constructor(s) ----------------------------------------
-    public Projectile(int xGiven, int yGiven, int widthGiven, int heightGiven) {
+    public Projectile(int xGiven, int yGiven,
+                        int xVelGiven, int yVelGiven,
+                        int widthGiven, int heightGiven) {
         frozen = true;
         x = xGiven;
         y = yGiven;
+        xVel = xVelGiven;
+        yVel = yVelGiven;
         width = widthGiven;
         height = heightGiven;
+    }
+    public Projectile(String s)
+    {
+        unpack(s);
     }
 
     //accessors and modifiers (get and set methods) ---------
@@ -56,10 +67,10 @@ public class Projectile implements GameObject {
      */
     public void draw(Graphics g, int scaleDownFactor, int offsetX, int offsetY) {
 
-        int screenx = x * scaleDownFactor;
-        int screeny = y * scaleDownFactor;
-        int screenwidth = width * scaleDownFactor;
-        int screenheight = height* scaleDownFactor;
+        int screenx = x / scaleDownFactor;
+        int screeny = y / scaleDownFactor;
+        int screenwidth = width / scaleDownFactor;
+        int screenheight = height / scaleDownFactor;
         screenx += offsetX;
         screeny += offsetY;
         g.fillRect(screenx, screeny, screenwidth, screenheight);
@@ -77,31 +88,60 @@ public class Projectile implements GameObject {
         }
     }
 
-    public int getStealth() {
-        return 0;
-    }
+//    public int getStealth() {
+//        return 0;
+//    }
 
-    public String pack() {
-        String p = "PROJ" + "X" + x + "Y" + y + "W" + width + "H" + height;
+    public String pack() 
+    {
+        //Let's comment these better!  
+        /*
+        StoringPacking in this order: 
+        x,y,xVel,yVel,width,height,damage
+        */
+        String p = "PRO" + 
+                "X" + x + "Y" + y + 
+                "A" + xVel + "B" + yVel + 
+                "W" + width + "H" + height +
+                "D" + damage;
         return p;
     }
 
     public void unpack(String s) {
         String temp;
-        int J, F, C;
-        temp = s.substring(s.indexOf("X") + 1, s.indexOf("Y") - 1);
+        temp = s.substring(s.indexOf("X") + 1, s.indexOf("Y"));
         x = Integer.parseInt(temp);
-
-        temp = s.substring(s.indexOf("Y") + 1, s.indexOf("V") - 1);
+        temp = s.substring(s.indexOf("Y") + 1, s.indexOf("A"));
         y = Integer.parseInt(temp);
 
-        temp = s.substring(s.indexOf("W") + 1, s.indexOf("H") - 1);
-        width = Integer.parseInt(temp);
+        temp = s.substring(s.indexOf("A") + 1, s.indexOf("B"));
+        xVel = Integer.parseInt(temp);
+        temp = s.substring(s.indexOf("B") + 1, s.indexOf("W"));
+        yVel = Integer.parseInt(temp);
 
-        temp = s.substring(s.indexOf("H") + 1, s.length());
+        temp = s.substring(s.indexOf("W") + 1, s.indexOf("H"));
+        width = Integer.parseInt(temp);
+        temp = s.substring(s.indexOf("H") + 1, s.indexOf("D"));
         height = Integer.parseInt(temp);
+
+        temp = s.substring(s.indexOf("D") + 1, s.length());
+        damage = Integer.parseInt(temp);
     }
 
+//    public void fireProjectile(int startX, int startY){
+//        
+//        //Initialize this projectile based on starting location to move upwards.
+//        x=startX;
+//        y=startY;
+//        xVel= 0;
+//        yVel= 8;
+//        frozen=false;
+//    }
+
+    // we are going to set up getSpeed() and setSpeed() methods because everyone is going to 
+    //use int values, and we will decide what the size of the projectile is
+    //we are going to make a final method and test it to draw the projectilein the client side 
+    //
 
     //other methods -----------------------------------------
 }
