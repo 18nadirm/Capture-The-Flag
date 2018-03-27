@@ -33,14 +33,18 @@ public class Barrier implements GameObject
      public string cannotMove()
      {
        if(Player.getX() <= 0)
-       {
+       {         
+         if(Player.getY() <= 0)
+         {
+           return ;
+         }
         return ;
        }
        else if(Player.getY() <= 0)
        {
          return ;
        }
-       
+
      }
 
 
