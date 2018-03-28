@@ -1,6 +1,5 @@
 package gameObjects;
 //TODO: Teach others how to use the collaboration software!!
-//TODO: Have only one base gun, changes will be made in the Store.
 
 //Collaborator ID: 3e12fb13-b425-4ff8-9cbf-f109595cbb68
 
@@ -78,25 +77,13 @@ This enables people to "upgrade" the range of the Launcher
        public double getRange() {return range;} // returns amount of pixels that the projectile should travel
        public double getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
     //Other methods
-    /*
-    still working on it the idea is to have a 5 base guns which you can customize and this is one of those
-    */
-    public void sniper()
-    {
-      damage = 50.0;
-      reloadTime = 10.0;
-      projectileSpeed = 2.0;
-      range = 500.0;
-      effectRadius = 5.0;
-
-    }
            /**
         * T: Reload Time
         * D: Damage
         * S: ProjSpeed
         * E: Effect Radius
         * R: Range
-        * @return 
+        * @return
         */
        public String pack() {
         String p = "LCH" + "T" + reloadTime + "D" + damage + "S" + projectileSpeed + "E" + effectRadius+"R"+range;
@@ -105,7 +92,7 @@ This enables people to "upgrade" the range of the Launcher
 
     public void unpack(String s) {
         String temp;
-        
+
         temp = s.substring(s.indexOf("T") + 1, s.indexOf("D") - 1);
         reloadTime = Double.parseDouble(temp);
 
@@ -117,11 +104,11 @@ This enables people to "upgrade" the range of the Launcher
 
          temp = s.substring(s.indexOf("E") + 1, s.indexOf("R") - 1);
         effectRadius = Double.parseDouble(temp);
-        
+
         temp = s.substring(s.indexOf("R") + 1, s.length());
         range = Double.parseDouble(temp);
-        
-        
+
+
     }
 
 
