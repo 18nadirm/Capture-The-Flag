@@ -30,22 +30,19 @@ public class Barrier implements GameObject
      /**returns a  that the tank should not have
      *velocity in
      */
-     public string cannotMove()
+     public string canMove()
      {
-       if(Player.getX() <= 0)
+       if(Player.getX() <= 0 || Player.getX() >= 1200)
        {
-         if(Player.getY() <= 0)
-         {
-           return ;
-         }
-        return ;
+        return false;
        }
-       else if(Player.getY() <= 0)
+       else if(Player.getY() <= 0 || Player.getY() >= 700)
        {
          return ;
        }
-
-     }
+       else
+        return true
+    }
 
 
     public void draw(Graphics g, int scaleDownFactor, int offsetX, int offsetY)
