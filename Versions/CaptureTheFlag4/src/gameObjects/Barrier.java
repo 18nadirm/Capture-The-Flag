@@ -2,6 +2,7 @@ package gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import gameObjects.Player;
 
 public class Barrier implements GameObject
 {
