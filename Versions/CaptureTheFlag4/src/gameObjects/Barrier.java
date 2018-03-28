@@ -27,10 +27,10 @@ public class Barrier implements GameObject
      * @param offsetY - the amount to add to your y coordinate before drawing.
      */
 
-     /**returns a  that the tank should not have
-     *velocity in
+     /**returns false if the tank is against a barrier (its position is on
+     *an edge of the map)
      */
-     public string canMove()
+     public boolean canMove()
      {
        if(Player.getX() <= 0 || Player.getX() >= 1200)
        {
@@ -38,10 +38,10 @@ public class Barrier implements GameObject
        }
        else if(Player.getY() <= 0 || Player.getY() >= 700)
        {
-         return ;
+         return false;
        }
        else
-        return true
+        return true;
     }
 
 
