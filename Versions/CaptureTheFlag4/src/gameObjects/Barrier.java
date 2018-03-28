@@ -28,7 +28,7 @@ public class Barrier implements GameObject
      * @param offsetY - the amount to add to your y coordinate before drawing.
      */
 
-     /**returns false if the tank is against a barrier (its position is on
+     /**returns false if the tank is against on an edge of the map (its position is on
      *an edge of the map)
      */
      public boolean canMove()
