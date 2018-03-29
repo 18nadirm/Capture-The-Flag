@@ -31,6 +31,12 @@ public class Barrier implements GameObject
      /**returns false if the tank is against a barrier (its position is on
      *an edge of the map)
      */
+
+     public barrier(int x, int y, int width, int height)
+     {
+       new Rectangle(x,y,width,height);
+       if
+     }
      public boolean canMove()
      {
        if(Player.getX() <= 0 || Player.getX() >= 1200)
