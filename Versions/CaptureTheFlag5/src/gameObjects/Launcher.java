@@ -40,6 +40,14 @@ public class Launcher
     	return (double)var;	//typecasted
 
     }
+    /*
+    * Authors:Mohsin Nadir and Sasanka Kondapi
+    */
+    public double changeProjectileSpeed(double num)
+    {
+      projectileSpeed *= num;
+      return projectileSpeed;
+    }
 
 
     /*
@@ -79,7 +87,8 @@ This enables people to "upgrade" the range of the Launcher
        public double getPSpeed() {return projectileSpeed;} // returns the speed at which the projectile should travel
     //Other methods
     /*
-    still working on it the idea is to have a 5 base guns which you can customize and this is one of those
+    Authors:Sasanka K and Mohsin N
+    Now that the game is finished we added it back as an option if we wanted to implement it
     */
     public void sniper()
     {
@@ -96,7 +105,7 @@ This enables people to "upgrade" the range of the Launcher
         * S: ProjSpeed
         * E: Effect Radius
         * R: Range
-        * @return 
+        * @return
         */
        public String pack() {
         String p = "LCH" + "T" + reloadTime + "D" + damage + "S" + projectileSpeed + "E" + effectRadius+"R"+range;
@@ -105,7 +114,7 @@ This enables people to "upgrade" the range of the Launcher
 
     public void unpack(String s) {
         String temp;
-        
+
         temp = s.substring(s.indexOf("T") + 1, s.indexOf("D") - 1);
         reloadTime = Double.parseDouble(temp);
 
@@ -117,11 +126,11 @@ This enables people to "upgrade" the range of the Launcher
 
          temp = s.substring(s.indexOf("E") + 1, s.indexOf("R") - 1);
         effectRadius = Double.parseDouble(temp);
-        
+
         temp = s.substring(s.indexOf("R") + 1, s.length());
         range = Double.parseDouble(temp);
-        
-        
+
+
     }
 
 
